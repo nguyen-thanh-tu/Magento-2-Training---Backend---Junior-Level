@@ -3,26 +3,39 @@
 namespace TUTJunior\CourseType\Controller\Adminhtml\Attachment;
 
 use Magento\Backend\App\Action\Context;
-use Magento\Framework\App\ResponseInterface;
-use TUTJunior\CourseType\Model\Attachment as ModelAttachment;
+use TUTJunior\CourseType\Model\AttachmentFactory;
+use TUTJunior\CourseType\Model\ResourceModel\Attachment\CollectionFactory;
+use Magento\Ui\Component\MassAction\Filter;
 
 class MassDelete extends \Magento\Backend\App\Action
 {
+    protected $modelAttachment;
+    protected $attachmentCollectionFactory;
+    protected $filter;
+
     public function __construct
     (
-        ModelAttachment $modelAttachment,
+        AttachmentFactory $modelAttachment,
+        CollectionFactory $attachmentCollectionFactory,
+        Filter $filter,
         Context $context
     )
     {
         $this->modelAttachment = $modelAttachment;
+        $this->attachmentCollectionFactory = $attachmentCollectionFactory;
+        $this->_filer = $filter;
         parent::__construct($context);
     }
 
     public function execute()
     {
-        $ids = $this->getRequest()->getParams();
+        $collection = $this->_filer->getCollection($this->attachmentCollectionFactory->create());
+        $ids = $collection->getAllIds();
         $model = $this->modelAttachment->create();
         $model->deleteMultiple($ids);
+        $this->messageManager->addSuccessMessage(
+            __('A total of %1 record(s) have been deleted.', count($ids))
+        );
         return $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT)->setPath('course/attachment/index');
     }
 }

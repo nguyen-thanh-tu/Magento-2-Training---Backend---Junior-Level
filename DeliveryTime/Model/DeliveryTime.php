@@ -10,4 +10,18 @@ class DeliveryTime extends AbstractModel
     {
         $this->_init(\TUTJunior\DeliveryTime\Model\ResourceModel\DeliveryTime::class);
     }
+
+
+    public function deleteMultiple($dataArr)
+    {
+        $size = count($dataArr);
+        if (!is_array($dataArr) && $size == 0) {
+            return;
+        }
+        $collectionIds = implode(', ', $dataArr);
+        $this->getResource()->getConnection()->delete(
+            $this->getResource()->getMainTable(),
+            "{$this->getIdFieldName()} in ({$collectionIds})"
+        );
+    }
 }
