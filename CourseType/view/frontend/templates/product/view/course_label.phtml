@@ -1,0 +1,10 @@
+<?php
+$product = $block->getProduct();
+$doc = $block->getCourseDocument($product->getData('document'));
+?>
+<?php if($product->getTypeId() === 'course_type'):?>
+<div>
+    <img src="<?= $doc->getIcon() ?>">
+    <span><?= $doc->getFileLabel() ?></span>
+</div>
+<?php endif; ?>

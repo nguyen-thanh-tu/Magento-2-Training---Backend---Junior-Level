@@ -1,0 +1,30 @@
+<?php
+$jsonProductData = $block->getProductSaleOffJsonData();
+?>
+<div class="salebox" style="display: inline-block;">
+    <div class="tunt-salebox">
+        <span class="tunt-salebox-icon" >
+            <img src="<?= $block->escapeHtml($block->getViewFileUrl('Magenest_NotificationBox::image/noti.png'));?>"
+                 alt="">
+        </span>
+        <div id="custom-component" data-bind="scope:'customcomponent'">
+            <!-- ko template: getTemplate() --><!-- /ko -->
+        </div>
+    </div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#custom-component": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "customcomponent": {
+                        "component": "TUTJunior_HandlePageRedirection/js/salebox/salebox",
+                        "items": <?= $jsonProductData ?>
+                    }
+                }
+            }
+        }
+    }
+</script>
+

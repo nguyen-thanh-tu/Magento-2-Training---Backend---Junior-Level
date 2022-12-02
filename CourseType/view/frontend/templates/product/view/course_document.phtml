@@ -1,0 +1,9 @@
+<?php
+$product = $block->getProduct();
+$doc = $block->getCourseDocument($product->getData('document'));
+?>
+<div style="color: #1979c3">
+    <a href="<?= $doc->getFileLink() ?>">
+        <?= $product->getData('document') ?>
+    </a>
+</div>

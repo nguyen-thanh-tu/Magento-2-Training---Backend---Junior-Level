@@ -1,0 +1,17 @@
+<div class="delivery_date">
+    <label class="label" for="delivery_date"><span>Delivery Date</span></label>
+    <input data-bind="datepicker: true" type="text" class="input-text required-entry" id="delivery_date" name="delivery_date" aria-required="true" >
+</div>
+<div class="delivery_time_interval">
+    <label class="label" for="delivery_time_interval"><span>Delivery Time Interval</span></label>
+    <select id="delivery_time_interval" data-bind="options: deliveryTimeInterval,
+                                   optionsCaption: '--Choose Delivery Time Interval--',
+                                   value: noSelected,
+                                   optionsText: 'label',
+                                   optionsValue: 'value',
+                                   event : {change : getOptionValue()}"></select>
+</div>
+<div class="delivery_comment">
+    <label class="label" for="delivery_comment"><span>Delivery Comment</span></label>
+    <textarea class="input-text required-entry" id="delivery_comment" name="delivery_comment" aria-required="true" maxlength="500"></textarea>
+</div>

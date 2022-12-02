@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.info.main">
+            <block class="TUTJunior\CourseType\Block\Product\View" name="product.info.course_label" template="TUTJunior_CourseType::product/view/course_label.phtml" before="product.info.price" />
+        </referenceContainer>
+        <referenceBlock class="TUTJunior\CourseType\Block\Product\View" name="product.info.details" template="TUTJunior_CourseType::product/view/details.phtml">
+            <block class="TUTJunior\CourseType\Block\Product\View" name="course_document.tab" template="TUTJunior_CourseType::product/view/course_document.phtml" group="detailed_info" >
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Course Document</argument>
+                </arguments>
+            </block>
+            <block class="TUTJunior\CourseType\Block\Product\View" name="course_timeline.tab" template="TUTJunior_CourseType::product/view/course_timeline.phtml" group="detailed_info" >
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Course Timeline</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

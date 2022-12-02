@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="TUTJunior_DeliveryTime::deliverytime" title="Delivery Time" module="TUTJunior_DeliveryTime" sortOrder="51" resource="TUTJunior_DeliveryTime::deliverytime"/>
+        <add id="TUTJunior_DeliveryTime::deliverytime_grid" title="Manage Delivery Time" module="TUTJunior_DeliveryTime" sortOrder="10" action="deliverytime/index/index" resource="TUTJunior_DeliveryTime::post" parent="TUTJunior_DeliveryTime::deliverytime"/>
+        <add id="TUTJunior_DeliveryTime::deliverytime_configuration" title="Configuration" module="TUTJunior_DeliveryTime" sortOrder="99" parent="TUTJunior_DeliveryTime::deliverytime" action="adminhtml/system_config/edit/section/deliverytime" resource="TUTJunior_DeliveryTime::deliverytime_configuration"/>
+    </menu>
+</config>

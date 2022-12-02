@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/rest_dev/getProduct/:id" method="GET">
+        <service class="TUTJunior\CancelOrder\Api\ProductRepositoryInterface" method="getItem" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/rest_dev/setDescription" method="PUT">
+        <service class="TUTJunior\CancelOrder\Api\ProductRepositoryInterface" method="setDescription" />
+        <resources>
+            <resource ref="TUTJunior_CancelOrder::products_set_description" />
+        </resources>
+    </route>
+    <route url="/V1/rest_dev/order/history/customer/:id" method="GET">
+        <service class="TUTJunior\CancelOrder\Api\OrderHistoryRepostoryInterface" method="getOrderHistoryByCustomerId" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/rest_dev/order/cancel/order" method="POST">
+        <service class="TUTJunior\CancelOrder\Api\OrderHistoryRepostoryInterface" method="cancelOrder" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/rest_dev/order/detail/order" method="POST">
+        <service class="TUTJunior\CancelOrder\Api\OrderHistoryRepostoryInterface" method="orderDetail" />
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+</routes>
