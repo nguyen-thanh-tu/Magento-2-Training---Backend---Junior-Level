@@ -18,19 +18,50 @@ define([
             if (shippingAddress['customAttributes'] === undefined) {
                 shippingAddress['customAttributes'] = {};
             }
+
             if(
-                shippingAddress['extension_attributes']['delivery_date'] === undefined ||
-                shippingAddress['extension_attributes']['delivery_time_interval'] === undefined ||
-                shippingAddress['extension_attributes']['delivery_comment'] === undefined
+                shippingAddress['extension_attributes']['delivery_date'] === undefined &&
+                shippingAddress['extension_attributes']['delivery_time_interval'] === undefined
             )
             {
                 shippingAddress['customAttributes'] = shippingAddress['customAttributes'].concat({
-                    attribute_code: "delivery_date", value: 'Delivery Date: '+$('#delivery_date').val()
+                    attribute_code: "delivery_date", value: ""
                 },{
-                    attribute_code: "delivery_time_interval", value: 'Delivery Time: '+$('#delivery_time_interval').val()
-                },{
-                    attribute_code: "delivery_comment", value: 'Delivery Comment: '+$('#delivery_comment').val()
+                    attribute_code: "delivery_time_interval", value: ""
                 });
+
+                if(window.checkoutConfig.show_hide_custom_block)
+                {
+                    shippingAddress['customAttributes'] = shippingAddress['customAttributes'].concat({
+                        attribute_code: "delivery_comment", value: 'Delivery Comment: '+$('#delivery_comment').val()
+                    });
+                }
+            }
+            shippingAddress['customAttributes'].forEach(myFunction);
+
+            function myFunction(item, index) {
+                if( item.attribute_code === "delivery_date" ){
+                    if(shippingAddress['extension_attributes']['delivery_date'] !== $('#delivery_date').val())
+                    {
+                        shippingAddress['customAttributes'][index] = {
+                            attribute_code: "delivery_date", value: 'Delivery Date: '+$('#delivery_date').val()
+                        };
+                    }
+                } else if ( item.attribute_code === "delivery_time_interval" ){
+                    if(shippingAddress['extension_attributes']['delivery_time_interval'] !== $('#delivery_time_interval').val())
+                    {
+                        shippingAddress['customAttributes'][index] = {
+                            attribute_code: "delivery_time_interval", value: 'Delivery Time: '+$('#delivery_time_interval').val()
+                        };
+                    }
+                } else if ( item.attribute_code === "delivery_comment" ){
+                    if(shippingAddress['extension_attributes']['delivery_comment'] !== $('#delivery_comment').val())
+                    {
+                        shippingAddress['customAttributes'][index] = {
+                            attribute_code: "delivery_comment", value: 'Delivery Comment: '+$('#delivery_comment').val()
+                        };
+                    }
+                }
             }
             shippingAddress['extension_attributes']['delivery_date'] = $('#delivery_date').val();
             shippingAddress['extension_attributes']['delivery_time_interval'] = $('#delivery_time_interval').val();

@@ -19,6 +19,7 @@ define([
         initialize: function () {
             var self = this;
             this._super();
+            self.canVisibleBlock = show_hide_custom_blockConfig;
             self.deliveryTimeInterval = ko.observableArray();
             Object.keys(deliveryTimeOption).forEach(function (index) {
                 self.deliveryTimeInterval.push({
@@ -63,7 +64,5 @@ define([
             };
             return this;
         },
-
-        canVisibleBlock: show_hide_custom_blockConfig
     });
 });

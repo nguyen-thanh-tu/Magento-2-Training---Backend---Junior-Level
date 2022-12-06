@@ -58,7 +58,7 @@ class CustomDatePick implements ConfigProviderInterface
                 }
             }
         }
-        $enabled = $this->scopeConfiguration->getValue('learning_block_config/general/enabled', ScopeInterface::SCOPE_STORE);
+        $enabled = $this->scopeConfiguration->getValue('deliveryTime/general/enable_comments', ScopeInterface::SCOPE_STORE);
         $maxDate = $this->scopeConfiguration->getValue('deliveryTime/general/maximum_waiting_time', ScopeInterface::SCOPE_STORE);
         $minDate = $this->scopeConfiguration->getValue('deliveryTime/general/minimum_waiting_time', ScopeInterface::SCOPE_STORE);
         $noDeliveryDay = $this->scopeConfiguration->getValue('deliveryTime/general/days_not_receiving_goods', ScopeInterface::SCOPE_STORE);
