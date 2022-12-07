@@ -17,13 +17,19 @@ class OrderHistoryRepostory implements OrderHistoryRepostoryInterface
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $orderCollectionFactory,
         OrderRepositoryInterface $orderRepository,
         RequestOrderInterfaceFactory $requestOrderFactory,
-        ResponseOrderInterfaceFactory $responseOrderFactory
+        ResponseOrderInterfaceFactory $responseOrderFactory,
+        \TUTJunior\CancelOrder\Api\DataArrayInterfaceFactory $dataArray,
+        \TUTJunior\CancelOrder\Api\Data\OrderDetailReponseInterfaceFactory $orderDetailReponse,
+        \TUTJunior\CancelOrder\Api\Data\ItemArrayReponseInterfaceFactory $itemArrayReponse
     )
     {
         $this->_orderCollectionFactory = $orderCollectionFactory;
         $this->orderRepository = $orderRepository;
         $this->requestOrderFactory = $requestOrderFactory;
         $this->responseOrderFactory = $responseOrderFactory;
+        $this->dataArray = $dataArray;
+        $this->orderDetailReponse = $orderDetailReponse;
+        $this->itemArrayReponse = $itemArrayReponse;
     }
 
     /**
@@ -33,31 +39,30 @@ class OrderHistoryRepostory implements OrderHistoryRepostoryInterface
      * @return ResponseOrderInterface
      * @throws NoSuchEntityException
      */
-    public function getOrderHistoryByCustomerId(int $id) : mixed
+    public function getOrderHistoryByCustomerId(int $customerId)
     {
         $orders = $this->_orderCollectionFactory->create()->addFieldToSelect(
             '*'
         )->addFieldToFilter(
             'customer_id',
-            $id
+            $customerId
         );
 
         /** @var \Magento\Sales\Model\ResourceModel\Order\Collection $orders */
 
-        return $this->getResponseOrderFromProduct($orders);
-    }
-
-    /**
-     * @param \Magento\Sales\Model\ResourceModel\Order\Collection $order
-     * @return ResponseOrderInterface
-     */
-    private function getResponseOrderFromProduct(\Magento\Sales\Model\ResourceModel\Order\Collection $orders) : mixed
-    {
         /** @var ResponseOrderInterface $responseOrder */
         $data = [];
         foreach ($orders as $order)
         {
-            $data[] = json_encode($order->getData());
+            $responseOrder = [];
+            foreach ($order->getData() as $key => $value)
+            {
+                $dataArray = $this->dataArray->create()
+                    ->setName($key)
+                    ->setValue($value);
+                $responseOrder[] = $dataArray;
+            }
+            $data[] = $this->itemArrayReponse->create()->setItemArray($responseOrder);
         }
         $responseOrder = $this->responseOrderFactory->create();
 
@@ -69,53 +74,60 @@ class OrderHistoryRepostory implements OrderHistoryRepostoryInterface
     /**
      * @inheritDoc
      *
+     * @param int $customerId
      * @param int $id
-     * @return ResponseOrderInterface
+     * @return string
      * @throws NoSuchEntityException
      */
-    public function cancelOrder($id) : mixed
+    public function cancelOrder(int $customerId, int $id)
     {
-        $responseOrder = $this->responseOrderFactory->create();
         try{
             $order = $this->orderRepository->get($id);
-            if($order->getStatus() != 'canceled')
+            if($order->getStatus() != 'canceled' && $order->getCustomerId() == $customerId)
             {
                 $order->cancel();
                 $order->setState(\Magento\Sales\Model\Order::STATE_CANCELED);
                 $order->setStatus(\Magento\Sales\Model\Order::STATE_CANCELED);
                 $order->save();
-                $responseOrder->setOrderCancel('cenceled order id');
+                $return = 'cenceled order id';
             }else{
-                $responseOrder->setOrderCancel('order id been cenceled before');
+                $return = 'order id been cenceled before';
             }
         } catch (\Exception $exception) {
-            $responseOrder->setOrderCancel('Something were wrong 500');
+            $return =  'Something were wrong 500';
         }
 
-        return $responseOrder;
+        return $return;
     }
 
     /**
      * Return a filtered product.
      *
+     * @param int $customerId
      * @param int $id
-     * @return \TUTJunior\CancelOrder\Api\ResponseOrderInterface
+     * @return \TUTJunior\CancelOrder\Api\Data\OrderDetailReponseInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function orderDetail(int $id) : mixed
+    public function orderDetail(int $customerId, int $id)
     {
-        try{
-            $responseOrder = $this->responseOrderFactory->create();
-            $order = $this->_orderCollectionFactory->create()->addFieldToSelect(
-                '*'
-            )->addFieldToFilter(
-                'entity_id',
-                $id
-            );
-            $responseOrder->setOrderDetail([json_encode($order->getFirstItem()->getData())]);
-        } catch (\Exception $exception) {
-            $responseOrder->setOrderCancel('Something were wrong 500');
+        $order = $this->_orderCollectionFactory->create()->addFieldToSelect(
+            '*'
+        )->addFieldToFilter(
+            'entity_id',
+            $id
+        );
+
+        $responseOrder = [];
+        foreach ($order->getFirstItem()->getData() as $key => $value)
+        {
+            $dataArray = $this->dataArray->create();
+            $dataArray->setName($key);
+            $dataArray->setValue($value);
+            $responseOrder[] = $dataArray;
         }
-        return $responseOrder;
+
+        $orderDetailReponse = $this->orderDetailReponse->create();
+        $orderDetailReponse->setOrderDetai($responseOrder);
+        return $orderDetailReponse;
     }
 }

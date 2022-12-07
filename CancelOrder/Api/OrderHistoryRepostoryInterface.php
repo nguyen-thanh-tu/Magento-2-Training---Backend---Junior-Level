@@ -7,27 +7,29 @@ interface OrderHistoryRepostoryInterface
     /**
      * Return a filtered product.
      *
-     * @param int $id
+     * @param int $customerId
      * @return \TUTJunior\CancelOrder\Api\ResponseOrderInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getOrderHistoryByCustomerId(int $id);
+    public function getOrderHistoryByCustomerId(int $customerId);
 
     /**
      * Return a filtered product.
      *
+     * @param int $customerId
      * @param int $id
-     * @return \TUTJunior\CancelOrder\Api\ResponseOrderInterface
+     * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function cancelOrder(int $id);
+    public function cancelOrder(int $customerId, int $id);
 
     /**
      * Return a filtered product.
      *
+     * @param int $customerId
      * @param int $id
-     * @return \TUTJunior\CancelOrder\Api\ResponseOrderInterface
+     * @return \TUTJunior\CancelOrder\Api\Data\OrderDetailReponseInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function orderDetail(int $id);
+    public function orderDetail(int $customerId, int $id);
 }

@@ -21,7 +21,7 @@ class ListProduct extends \Magento\Catalog\Block\Product\ListProduct
         CategoryRepositoryInterface $categoryRepository,
         Data $urlHelper,
         array $data = [],
-        ?OutputHelper $outputHelper = null,
+        ?OutputHelper $outputHelper = null
     )
     {
         $this->courseTypeHelper = $courseTypeHelper;

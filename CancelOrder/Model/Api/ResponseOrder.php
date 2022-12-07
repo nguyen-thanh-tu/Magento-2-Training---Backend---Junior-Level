@@ -17,24 +17,4 @@ class ResponseOrder extends DataObject implements ResponseOrderInterface
     {
         return $this->setData(self::DATA_HISTORY, $order);
     }
-
-    public function getOrderCancel()
-    {
-        return $this->_getData(self::DATA_NOTICE);
-    }
-
-    public function setOrderCancel(string $notice)
-    {
-        return $this->setData(self::DATA_NOTICE, $notice);
-    }
-
-    public function getOrderDetail()
-    {
-        return $this->_getData(self::DATA_ORDER);
-    }
-
-    public function setOrderDetail(array $order)
-    {
-        return $this->setData(self::DATA_ORDER, $order);
-    }
 }
