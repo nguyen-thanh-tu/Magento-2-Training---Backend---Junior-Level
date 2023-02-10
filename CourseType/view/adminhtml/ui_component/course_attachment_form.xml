@@ -92,7 +92,7 @@
                 </select>
             </formElements>
         </field>
-        <field name="file_path" formElement="fileUploader">
+        <field name="file_path" formElement="fileUploader" component="TUTJunior_CourseType/js/document/file-uploader">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="source" xsi:type="string">course_attachment</item>
