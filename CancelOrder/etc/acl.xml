@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Sales::sales" title="Sales" translate="title" sortOrder="20">
+                    <resource id="Magento_Sales::sales_operation" title="Operations" translate="title" sortOrder="10">
+                        <resource id="TUTJunior_CancelOrder::cancelorder_grid" title="Cancel Order Grid"
+                                  translate="title" sortOrder="10" />
+                    </resource>
+                </resource>
+                <resource id="TUTJunior_CancelOrder::products" title="Dev API - Products"
+                          translate="title" sortOrder="110">
+                    <resource id="TUTJunior_CancelOrder::products_get" title="Get product"
+                              translate="title" sortOrder="10" />
+                    <resource id="TUTJunior_CancelOrder::products_set_description" title="Set description"
+                              translate="title" sortOrder="20" />
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>
