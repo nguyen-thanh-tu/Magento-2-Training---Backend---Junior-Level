@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
-    <menu>
-        <add id="TUTJunior_CancelOrder::cancelorder_grid" title="Cancel Order Grid" module="TUTJunior_CancelOrder" sortOrder="10" action="cancel/order/index" resource="TUTJunior_CancelOrder::cancelorder_grid" parent="Magento_Sales::sales_operation"/>
-    </menu>
-</config>
